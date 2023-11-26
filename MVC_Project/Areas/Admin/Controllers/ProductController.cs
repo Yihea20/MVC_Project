@@ -54,6 +54,9 @@ namespace MVC_Project.Areas.Admin.Controllers
                 product.Categorys = result.Select(u => new SelectListItem { Text = u.Name, Value = u.Id.ToString() });
                 product.Product = new ProductDTO();
                 product.Product = results;
+                productt.Used = true;
+                _unitOfWork.Product.Update(productt);
+                await _unitOfWork.Save(); 
                 return View(product);
             }
             
@@ -86,6 +89,7 @@ namespace MVC_Project.Areas.Admin.Controllers
                 if (Product.Id != 0)
                 {
                     var map = _mapper.Map<Product>(Product);
+                    map.Used = false;
                     _unitOfWork.Product.Update(map);
                     await _unitOfWork.Save();
                     TempData["success"] = "Category Update Success";

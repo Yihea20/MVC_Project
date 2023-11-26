@@ -22,6 +22,7 @@
             <th>Price</th>
             <th>Author</th>
             <th>Category</th>
+            <th>ChecK</th>
             <th></th>
         </tr>
     </thead>
@@ -34,9 +35,11 @@
                 <td>@c.ListPrice</td>
                 <td>@c.Author</td>
                 <td>@c.Category.Name</td>
+                <td>@c.Used</td>
                 <td><div class="w-75 btn-group" role="group">
+                    @if(!c.Used){
                         <a asp-controller="Product" asp-action="Upsert" asp-route-id="@c.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit </a>
-                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger mx-2"><i class="bi bi-trash3-fill"></i>Delete </a>
+                    }<a asp-controller="Product" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger mx-2"><i class="bi bi-trash3-fill"></i>Delete </a>
                     </div>
                 </td>
          

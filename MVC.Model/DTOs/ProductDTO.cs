@@ -36,6 +36,7 @@ namespace MVC.Model.DTOs
        
         public int CategoryId { get; set; }
         
-        public string? ImageUrl { get; set; } 
+        public string? ImageUrl { get; set; }
+        public bool Used { get; set; } = false;
     }
 }
