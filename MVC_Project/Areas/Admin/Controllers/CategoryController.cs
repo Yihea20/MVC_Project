@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC.DataAccess;
 using MVC.DataAccess.IRebository;
 using MVC.Model;
+using MVC.Utiltiy;
 using System.Runtime.InteropServices;
 
 namespace MVC_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize (Roles =SD.Role_Admin)]
     public class CategoryController : Controller
     {
        

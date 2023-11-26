@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
@@ -8,12 +9,14 @@ using MVC.DataAccess.IRebository;
 using MVC.Model;
 using MVC.Model.DTOs;
 using MVC.Model.VM;
+using MVC.Utiltiy;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MVC_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
