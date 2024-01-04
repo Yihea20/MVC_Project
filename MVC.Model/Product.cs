@@ -41,5 +41,6 @@ namespace MVC.Model
         public string ImageUrl { get; set; } = "hlkhlkhlkhjlkj";
 
         public bool Used { get; set; } = false;
+        public int CurrentUserId { get; set; } = 0;
     }
 }

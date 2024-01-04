@@ -106,7 +106,61 @@ namespace MVC_Project.Areas.Admin.Controllers
             }
             return View();
         }
-      
+       /* public async Task<IActionResult> Upload(int id,IFormFile? file)
+        {
+
+            string rote = _environment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string productPath = Path.Combine(rote, @"images\product");
+                var image = await _unitOfWork.Product.Get(q => q.Id == id);
+
+                if (!string.IsNullOrEmpty(image.ImageUrl))
+                {
+                    var old = Path.Combine(rote, image.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(old))
+                    {
+                        System.IO.File.Delete(old);
+                    }
+                }
+
+                using (var FileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(FileStream);
+                }
+                image.ImageUrl = @"\images\product\" + fileName;
+                image.Used = true;
+                _unitOfWork.Product.Update(image);
+                await _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
+            return View();
+
+        }*/
+        public async Task<IActionResult> Download(int id)
+        {
+            string rote = _environment.WebRootPath;
+            var image = await _unitOfWork.Product.Get(q => q.Id == id);
+            var old = Path.Combine(rote, image.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(old))
+            {
+                MemoryStream stream = new MemoryStream();
+                using (FileStream file = new FileStream(old, FileMode.Open)
+                )
+                {
+                    await file.CopyToAsync(stream);
+                }
+                //stream.Position = 0;
+                image.CurrentUserId = CurrentUserId.CurrentId;
+                image.Used = true;
+                _unitOfWork.Product.Update(image);
+                await _unitOfWork.Save();
+                return File(stream.ToArray(), "image/jpg", image.Title );
+            }
+            else { return NotFound(); }
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == 0 || id == null)

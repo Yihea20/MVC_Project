@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using MVC.Utiltiy;
 
 namespace MVC_Project.Areas.Identity.Pages.Account
 {
@@ -115,6 +116,8 @@ namespace MVC_Project.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    var userid =  _signInManager.UserManager.FindByEmailAsync(Input.Email).Id;
+                    CurrentUserId.CurrentId=userid;
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
